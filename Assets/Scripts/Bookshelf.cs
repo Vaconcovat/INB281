@@ -5,15 +5,22 @@ public class Bookshelf : MonoBehaviour {
 	public Book.BookCategory category;
 	public string categoryName;
 	public string categoryNameScrambled;
+	public bool scrambled;
 	// Use this for initialization
 	void Start () {
 		categoryName = category.ToString();
-		char[] characters = new char[categoryName.Length];
-		for (int i = 0; i < categoryName.Length; i++){
-			characters[i] = categoryName[i];
+		if(scrambled){
+			char[] characters = new char[categoryName.Length];
+			for (int i = 0; i < categoryName.Length; i++){
+				characters[i] = categoryName[i];
+			}
+			categoryNameScrambled = new string(Book.Randomize(characters));
+			GetComponentInChildren<TextMesh>().text = categoryNameScrambled;
 		}
-		categoryNameScrambled = new string(Book.Randomize(characters));
-		GetComponentInChildren<TextMesh>().text = categoryNameScrambled;
+		else{
+			GetComponentInChildren<TextMesh>().text = categoryName;
+		}
+
 	}
 	
 	// Update is called once per frame
