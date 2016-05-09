@@ -11,6 +11,10 @@ public class Book : MonoBehaviour {
 
 	public BookCategory category;
 	public Player player;
+			float jumpInterval;
+	public float jumpForce;
+	public float anger;
+	float jumpTimer;
 	/// <summary>
 	/// State of the book. 0 for free, 1 for equipping and 2 for equipped, 3 for correctly placed
 	/// </summary>
@@ -63,6 +67,24 @@ public class Book : MonoBehaviour {
 				GetComponentInChildren<MeshRenderer>().material.color = Color.yellow;
 				break;
 		}
+		if (anger > 0){
+			jumpInterval = 50.0f / anger;
+			jumpTimer -= Time.deltaTime;
+			anger -= 0.7f;
+			if (jumpTimer <= 0){
+				jumpTimer = jumpInterval;
+				Jump();
+			}
+			GetComponentInChildren<ParticleSystem>().Play();
+		}
+		else if (anger <= 0){
+			anger = 0;
+			GetComponentInChildren<ParticleSystem>().Pause();
+		}
+		if (jumpInterval < jumpTimer){
+			jumpTimer = jumpInterval;
+		}
+
 	}
 
 	public void Drop(){
@@ -78,5 +100,8 @@ public class Book : MonoBehaviour {
 		body.AddForce(player.view.forward.normalized * 20.0f, ForceMode.Impulse);
 	}
 
+	void Jump(){
+		body.AddForce(new Vector3(Random.Range(-1.0f,1.0f),Random.Range(0.0f,1.0f),Random.Range(-1.0f,1.0f)).normalized * jumpForce,ForceMode.Impulse);
+	}
 
 }

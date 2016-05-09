@@ -35,6 +35,9 @@ public class Bookshelf : MonoBehaviour {
 				if(book.category == this.category){
 					book.state = 3;
 				}
+				else{
+					book.anger += 1.0f;
+				}
 			}
 		}
 	}
