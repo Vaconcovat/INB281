@@ -11,7 +11,7 @@ public class Book : MonoBehaviour {
 
 	public BookCategory category;
 	public Player player;
-			float jumpInterval;
+	float jumpInterval;
 	public float jumpForce;
 	public float anger;
 	float jumpTimer;
@@ -33,6 +33,7 @@ public class Book : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		category = (BookCategory)Random.Range(0,8);
 		body = GetComponent<Rigidbody>();
 		player = FindObjectOfType<Player>();
 		categoryName = category.ToString();
@@ -49,6 +50,7 @@ public class Book : MonoBehaviour {
 		switch(state){
 			case 0:
 				body.isKinematic = false;
+				GetComponentInChildren<MeshRenderer>().material.color = Color.white;
 				break;
 			case 1:
 				body.isKinematic = true;
@@ -71,15 +73,13 @@ public class Book : MonoBehaviour {
 			jumpInterval = 50.0f / anger;
 			jumpTimer -= Time.deltaTime;
 			anger -= 0.7f;
-			if (jumpTimer <= 0){
+			if (jumpTimer <= 0 && state != 3){
 				jumpTimer = jumpInterval;
 				Jump();
 			}
-			GetComponentInChildren<ParticleSystem>().Play();
 		}
 		else if (anger <= 0){
 			anger = 0;
-			GetComponentInChildren<ParticleSystem>().Pause();
 		}
 		if (jumpInterval < jumpTimer){
 			jumpTimer = jumpInterval;

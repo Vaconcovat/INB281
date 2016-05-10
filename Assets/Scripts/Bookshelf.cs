@@ -36,8 +36,17 @@ public class Bookshelf : MonoBehaviour {
 					book.state = 3;
 				}
 				else{
-					book.anger += 1.0f;
+					book.anger += 1.2f;
 				}
+			}
+		}
+	}
+
+	void OnTriggerExit(Collider col){
+		if(col.gameObject.GetComponent<Book>() != null){
+			Book book = col.gameObject.GetComponent<Book>();
+			if(book.state == 3){
+				book.state = 0;
 			}
 		}
 	}
