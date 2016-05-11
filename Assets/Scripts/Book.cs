@@ -98,6 +98,7 @@ public class Book : MonoBehaviour {
 		player.equipped = null;
 		body.isKinematic = false;
 		body.AddForce(player.view.forward.normalized * 20.0f, ForceMode.Impulse);
+		body.AddTorque(Random.rotation.eulerAngles);
 	}
 
 	void Jump(){
