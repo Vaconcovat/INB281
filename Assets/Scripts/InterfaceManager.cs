@@ -15,6 +15,6 @@ public class InterfaceManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		counter.text = "Books sorted : " + gs.sortedBooks + " / " + gs.totalBooks;
-		timer.text = "TIME REMAINING : " + gs.levelTime.ToString(); 
+		timer.text = "TIME REMAINING : " + Mathf.Floor(gs.levelTime).ToString(); 
 	}
 }

@@ -19,6 +19,11 @@ public class Book : MonoBehaviour {
 	/// State of the book. 0 for free, 1 for equipping and 2 for equipped, 3 for correctly placed
 	/// </summary>
 	public int state;
+	public Material outlinedMaterial;
+	public Material angryMaterial;
+	public Material defaultMaterial;
+	public MeshRenderer pages;
+
 
 	public static T[] Randomize<T>(T[] source){
 		List<T> randomized = new List<T>();
@@ -50,7 +55,13 @@ public class Book : MonoBehaviour {
 		switch(state){
 			case 0:
 				body.isKinematic = false;
-				GetComponentInChildren<MeshRenderer>().material.color = Color.white;
+				GetComponentInChildren<TextMesh>().text = categoryNameScrambled;
+				if (Vector3.Distance(this.transform.position, player.transform.position) > 5.0f){
+					pages.material = outlinedMaterial;
+				}
+				else{
+					pages.material = defaultMaterial;
+				}
 				break;
 			case 1:
 				body.isKinematic = true;
@@ -59,14 +70,20 @@ public class Book : MonoBehaviour {
 				if (Vector3.Distance(transform.position, player.anchor.position) < 1.0f){
 					state = 2;
 				}
+				GetComponentInChildren<TextMesh>().text = categoryNameScrambled;
+				pages.material = defaultMaterial;
 				break;
 			case 2:
 				body.isKinematic = true;
-				transform.position = player.anchor.position;
+				//transform.position = player.anchor.position;
+				transform.position = Vector3.MoveTowards(transform.position, player.anchor.position, 1.0f);
 				transform.rotation = player.anchor.rotation;
+				GetComponentInChildren<TextMesh>().text = categoryNameScrambled;
+				pages.material = defaultMaterial;
 				break;
 			case 3:
-				GetComponentInChildren<MeshRenderer>().material.color = Color.yellow;
+				GetComponentInChildren<TextMesh>().text = "";
+				pages.material = defaultMaterial;
 				break;
 		}
 		if (anger > 0){
@@ -77,6 +94,7 @@ public class Book : MonoBehaviour {
 				jumpTimer = jumpInterval;
 				Jump();
 			}
+			pages.material = angryMaterial;
 		}
 		else if (anger <= 0){
 			anger = 0;
@@ -97,7 +115,7 @@ public class Book : MonoBehaviour {
 		state = 0;
 		player.equipped = null;
 		body.isKinematic = false;
-		body.AddForce(player.view.forward.normalized * 20.0f, ForceMode.Impulse);
+		body.AddForce(player.view.forward.normalized * 17.0f, ForceMode.Impulse);
 		body.AddTorque(Random.rotation.eulerAngles);
 	}
 
