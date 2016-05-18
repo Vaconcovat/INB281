@@ -29,12 +29,14 @@ public class GameManager : MonoBehaviour {
 			character.enabled = false;
 			fpc.enabled = false;
 			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
 			im.fired.text = "YOU'RE FIRED";
 		}
 		else if(gs.sortedBooks == gs.totalBooks){
 			character.enabled = false;
 			fpc.enabled = false;
 			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
 			im.fired.text = "YOU'RE NOT FIRED! (yet)\nTIME REMAINING: " + gs.levelTime.ToString();
 		}
 		else{
@@ -42,5 +44,9 @@ public class GameManager : MonoBehaviour {
 			fpc.enabled = true;
 			im.fired.text = "";
 		}
+	}
+
+	public void Exit(){
+		Application.Quit();
 	}
 }
