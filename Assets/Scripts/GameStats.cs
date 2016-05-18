@@ -25,7 +25,8 @@ public class GameStats : MonoBehaviour {
 			}
 		}
 		sortedBooks = i;
-
-		levelTime -= Time.deltaTime;
+		if(levelTime > 0 && sortedBooks < totalBooks){
+			levelTime -= Time.deltaTime;
+		}
 	}
 }
