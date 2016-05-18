@@ -8,7 +8,6 @@ public class GameStats : MonoBehaviour {
 	public int totalBooks;
 	public int sortedBooks;
 
-
 	Book[] books;
 	// Use this for initialization
 	void Start () {

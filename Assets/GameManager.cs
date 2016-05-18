@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour {
 			Cursor.lockState = CursorLockMode.None;
 			im.fired.text = "YOU'RE FIRED";
 		}
-		if(gs.sortedBooks == gs.totalBooks){
+		else if(gs.sortedBooks == gs.totalBooks){
 			character.enabled = false;
 			fpc.enabled = false;
 			Cursor.lockState = CursorLockMode.None;
