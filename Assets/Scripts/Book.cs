@@ -6,6 +6,7 @@ public class Book : MonoBehaviour {
 	public enum BookCategory{ROMANCE, DRAMA, HISTORY, HORROR, POETRY, FANTASY, SCIENCE, RELIGION};
 
 	Rigidbody body;
+	Collider coll;
 	string categoryName;
 	string categoryNameScrambled;
 
@@ -15,6 +16,7 @@ public class Book : MonoBehaviour {
 	public float jumpForce;
 	public float anger;
 	float jumpTimer;
+	bool thrown = false;
 	/// <summary>
 	/// State of the book. 0 for free, 1 for equipping and 2 for equipped, 3 for correctly placed
 	/// </summary>
@@ -23,7 +25,7 @@ public class Book : MonoBehaviour {
 	public Material angryMaterial;
 	public Material defaultMaterial;
 	public MeshRenderer pages;
-
+	public GameObject explosion;
 
 	public static T[] Randomize<T>(T[] source){
 		List<T> randomized = new List<T>();
@@ -48,6 +50,7 @@ public class Book : MonoBehaviour {
 		}
 		categoryNameScrambled = new string(Randomize(characters));
 		GetComponentInChildren<TextMesh>().text = categoryNameScrambled;
+		coll = GetComponent<Collider>();
 	}
 	
 	// Update is called once per frame
@@ -62,6 +65,7 @@ public class Book : MonoBehaviour {
 				else{
 					pages.material = defaultMaterial;
 				}
+				coll.enabled = true;
 				break;
 			case 1:
 				body.isKinematic = true;
@@ -72,9 +76,12 @@ public class Book : MonoBehaviour {
 				}
 				GetComponentInChildren<TextMesh>().text = categoryNameScrambled;
 				pages.material = defaultMaterial;
+				thrown = false;
+				coll.enabled = false;
 				break;
 			case 2:
 				body.isKinematic = true;
+				coll.enabled = false;
 				//transform.position = player.anchor.position;
 				transform.position = Vector3.MoveTowards(transform.position, player.anchor.position, 1.0f);
 				transform.rotation = player.anchor.rotation;
@@ -84,12 +91,13 @@ public class Book : MonoBehaviour {
 			case 3:
 				GetComponentInChildren<TextMesh>().text = "";
 				pages.material = defaultMaterial;
+				coll.enabled = true;
 				break;
 		}
 		if (anger > 0){
 			jumpInterval = 50.0f / anger;
 			jumpTimer -= Time.deltaTime;
-			anger -= 0.7f;
+			anger -= 0.5f;
 			if (jumpTimer <= 0 && state != 3){
 				jumpTimer = jumpInterval;
 				Jump();
@@ -101,6 +109,13 @@ public class Book : MonoBehaviour {
 		}
 		if (jumpInterval < jumpTimer){
 			jumpTimer = jumpInterval;
+		}
+
+		if(thrown){
+			GetComponent<TrailRenderer>().enabled = true;
+		}
+		else{
+			GetComponent<TrailRenderer>().enabled = false;
 		}
 
 	}
@@ -117,10 +132,12 @@ public class Book : MonoBehaviour {
 		body.isKinematic = false;
 		body.AddForce(player.view.forward.normalized * 17.0f, ForceMode.Impulse);
 		body.AddTorque(Random.rotation.eulerAngles);
+		thrown = true;
 	}
 
 	void Jump(){
 		body.AddForce(new Vector3(Random.Range(-1.0f,1.0f),Random.Range(0.0f,1.0f),Random.Range(-1.0f,1.0f)).normalized * jumpForce,ForceMode.Impulse);
+		Instantiate(explosion, transform.position, transform.rotation);
 	}
 
 }
