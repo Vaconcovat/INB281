@@ -70,7 +70,6 @@ public class Book : MonoBehaviour {
 			case 1:
 				body.isKinematic = true;
 				transform.position = Vector3.MoveTowards(transform.position, player.anchor.position, 1.0f);
-				player.equipped = this;
 				if (Vector3.Distance(transform.position, player.anchor.position) < 1.0f){
 					state = 2;
 				}
@@ -80,6 +79,7 @@ public class Book : MonoBehaviour {
 				coll.enabled = false;
 				break;
 			case 2:
+				player.equipped = this;
 				body.isKinematic = true;
 				coll.enabled = false;
 				//transform.position = player.anchor.position;
@@ -126,11 +126,11 @@ public class Book : MonoBehaviour {
 		body.isKinematic = false;
 	}
 
-	public void Throw(){
+	public void Throw(float force){
 		state = 0;
 		player.equipped = null;
 		body.isKinematic = false;
-		body.AddForce(player.view.forward.normalized * 17.0f, ForceMode.Impulse);
+		body.AddForce(player.view.forward.normalized * force, ForceMode.Impulse);
 		body.AddTorque(Random.rotation.eulerAngles);
 		thrown = true;
 	}

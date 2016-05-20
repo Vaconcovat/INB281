@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		if (gs.levelTime <= 0){
 			character.enabled = false;
+			character.GetComponent<Player>().enabled = false;
 			fpc.enabled = false;
 			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
