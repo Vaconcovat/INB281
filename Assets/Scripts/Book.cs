@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Book : MonoBehaviour {
 	public enum BookCategory{ROMANCE, DRAMA, HISTORY, HORROR, POETRY, FANTASY, SCIENCE, RELIGION};
-
+	public GameObject angryText;
 	Rigidbody body;
 	Collider coll;
 	string categoryName;
@@ -138,6 +138,7 @@ public class Book : MonoBehaviour {
 	void Jump(){
 		body.AddForce(new Vector3(Random.Range(-1.0f,1.0f),Random.Range(0.0f,1.0f),Random.Range(-1.0f,1.0f)).normalized * jumpForce,ForceMode.Impulse);
 		Instantiate(explosion, transform.position, transform.rotation);
+		Instantiate(angryText, transform.position, Quaternion.identity);
 	}
 
 }

@@ -4,7 +4,7 @@ using System.Collections;
 public class GameStats : MonoBehaviour {
 	[Header("SETTINGS")]
 	public float levelTime;
-	
+	public bool counting = false;
 	public int totalBooks;
 	public int sortedBooks;
 
@@ -24,7 +24,7 @@ public class GameStats : MonoBehaviour {
 			}
 		}
 		sortedBooks = i;
-		if(levelTime > 0 && sortedBooks < totalBooks){
+		if(levelTime > 0 && sortedBooks < totalBooks && counting){
 			levelTime -= Time.deltaTime;
 		}
 	}
