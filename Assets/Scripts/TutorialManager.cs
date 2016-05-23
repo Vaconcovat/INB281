@@ -32,7 +32,7 @@ public class TutorialManager : MonoBehaviour {
 			//Destroy(gameObject);
 			controller.m_WalkSpeed = 5;
 			controller.m_RunSpeed = 10;
-			GetComponent<TextMesh>().text = "Sort as many books \nas you can!";
+			GetComponent<TextMesh>().text = "Un-Jumble and return as many \nbooks to their genre as you can";
 		}
 	}
 }
