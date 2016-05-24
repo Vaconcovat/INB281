@@ -13,6 +13,7 @@ public class OrbitingText : MonoBehaviour {
 		if(Random.value > 0.5f){
 			speed = -speed;
 		}
+		transform.position = new Vector3(transform.position.x, transform.position.y + Random.Range(-3,3),transform.position.z);
 	}
 	
 	// Update is called once per frame

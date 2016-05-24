@@ -5,7 +5,7 @@ public class Bookspawn : MonoBehaviour {
 	public GameObject book;
 
 	// Use this for initialization
-	void Awake () {
+	public void Spawn () {
 		Instantiate(book,transform.position,Random.rotation);
 	}
 	

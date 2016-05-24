@@ -41,6 +41,7 @@ public class TutorialManager : MonoBehaviour {
 			FindObjectOfType<GolbalSounds>().StartMusic();
 			hider.SetActive(false);
 			transform.position = new Vector3(transform.position.x + Time.deltaTime, transform.position.y, transform.position.z);
+			GetComponent<TextMesh>().fontSize = 70;
 		}
 	}
 }

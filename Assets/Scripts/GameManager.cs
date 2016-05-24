@@ -6,13 +6,16 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 	public CharacterController character;
 	public FirstPersonController fpc;
+	public int totalBooks;
 
 	GameStats gs;
 	InterfaceManager im;
 	Bookshelf[] shelves;
+	Bookspawn[] spawners;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
+		spawners = FindObjectsOfType<Bookspawn>();
 		gs = GetComponent<GameStats>();
 		im = GetComponent<InterfaceManager>();
 		shelves = FindObjectsOfType<Bookshelf>();
@@ -21,6 +24,18 @@ public class GameManager : MonoBehaviour {
 			int randomShelf = Random.Range(0,shelves.Length);
 			shelves[i].category = shelves[randomShelf].category;
 			shelves[randomShelf].category = tempCategory;
+		}
+
+		//randomise spawners
+		for (int i = 0; i < spawners.Length; i++){
+			Bookspawn tempSpawn = spawners[i];
+			int randomSpawn = Random.Range(0,spawners.Length);
+			spawners[i] = spawners[randomSpawn];
+			spawners[randomSpawn] = tempSpawn;
+		}
+
+		for (int i = 0; i < totalBooks - 1; i++){
+			spawners[i].Spawn();
 		}
 	}
 	
