@@ -7,7 +7,6 @@ public class InterfaceManager : MonoBehaviour {
 	public Text timer;
 	public Text fired;
 	public Text Score;
-	public Text Highscore;
 	public GameObject retry;
 	public Image throwBar;
 

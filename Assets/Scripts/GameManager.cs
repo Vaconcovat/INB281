@@ -71,7 +71,8 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void Exit(){
-		Application.Quit();
+		SceneManager.LoadScene ("Main Menu");
+ 
 	}
 
 	public void Retry (){
