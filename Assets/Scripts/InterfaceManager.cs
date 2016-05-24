@@ -33,7 +33,7 @@ public class InterfaceManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		counter.text = "Books sorted : " + gs.sortedBooks + " / " + gs.totalBooks;
-		timer.text = "TIME REMAINING : " + Mathf.Ceil(gs.levelTime).ToString(); 
+		timer.text = "TIME REMAINING : " + Mathf.Floor((gs.levelTime/60)).ToString("00") + ":" + (gs.levelTime % 60).ToString("00"); 
 		throwBar.fillAmount = (player.throwStrength / player.maxThrow);
 		throwBar.color = new Color(1, 1-(player.throwStrength / player.maxThrow), 1-(player.throwStrength / player.maxThrow), 1.0f);
 
@@ -41,10 +41,10 @@ public class InterfaceManager : MonoBehaviour {
 			timer.enabled = true;
 		}
 		if(timer.enabled && timer.fontSize > 30){
-			timer.fontSize -= 2;
+			timer.fontSize -= 1;
 		}
 		if(counter.enabled && counter.fontSize > 30){
-			counter.fontSize -= 2;
+			counter.fontSize -= 1;
 		}
 		if(timer.enabled && timer.fontSize <= 30){
 			counter.enabled = true;

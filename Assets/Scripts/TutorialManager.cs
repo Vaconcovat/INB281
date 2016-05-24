@@ -4,10 +4,12 @@ using System.Collections;
 
 public class TutorialManager : MonoBehaviour {
 	public bool pickedUp = false;
+	public bool held = false;
 	public bool dropped = false;
 	FirstPersonController controller;
 	GameStats gs;
 	public Book tutorialBook;
+	public GameObject hider;
 
 
 	// Use this for initialization
@@ -24,15 +26,21 @@ public class TutorialManager : MonoBehaviour {
 			pickedUp = true;
 		}
 		if(pickedUp && !dropped){
-			GetComponent<TextMesh>().text = "Hold LMB to thow.\nPress RMB to drop.";
+			GetComponent<TextMesh>().text = "Book categories \nare scrambled.\n\nWASD to move.\nHold LMB to thow.\nPress RMB to drop.";
+			controller.m_WalkSpeed = 5;
+			controller.m_RunSpeed = 10;
 		}
 		if(tutorialBook.state != 2 && pickedUp){
+			held = true;
+		}
+		if(held && pickedUp){
 			dropped = true;
 			gs.counting = true;
 			//Destroy(gameObject);
-			controller.m_WalkSpeed = 5;
-			controller.m_RunSpeed = 10;
-			GetComponent<TextMesh>().text = "Un-Jumble and return as many \nbooks to their genre as you can";
+			GetComponent<TextMesh>().text = "Library closes in:\n" + Mathf.Floor((gs.levelTime/60)).ToString("00") + ":" + (gs.levelTime % 60).ToString("00") + "\n Get to work!";
+			FindObjectOfType<GolbalSounds>().StartMusic();
+			hider.SetActive(false);
+			transform.position = new Vector3(transform.position.x + Time.deltaTime, transform.position.y, transform.position.z);
 		}
 	}
 }

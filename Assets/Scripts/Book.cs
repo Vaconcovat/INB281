@@ -26,6 +26,9 @@ public class Book : MonoBehaviour {
 	public Material defaultMaterial;
 	public MeshRenderer pages;
 	public GameObject explosion;
+	AudioSource audioS;
+	TutorialManager tut;
+	public AudioClip angry, ding;
 
 	public static T[] Randomize<T>(T[] source){
 		List<T> randomized = new List<T>();
@@ -40,6 +43,7 @@ public class Book : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		tut = FindObjectOfType<TutorialManager>();
 		category = (BookCategory)Random.Range(0,8);
 		body = GetComponent<Rigidbody>();
 		player = FindObjectOfType<Player>();
@@ -51,6 +55,7 @@ public class Book : MonoBehaviour {
 		categoryNameScrambled = new string(Randomize(characters));
 		GetComponentInChildren<TextMesh>().text = categoryNameScrambled;
 		coll = GetComponent<Collider>();
+		audioS = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -59,7 +64,7 @@ public class Book : MonoBehaviour {
 			case 0:
 				body.isKinematic = false;
 				GetComponentInChildren<TextMesh>().text = categoryNameScrambled;
-				if (Vector3.Distance(this.transform.position, player.transform.position) > 5.0f){
+				if (Vector3.Distance(this.transform.position, player.transform.position) > 5.0f && tut.dropped){
 					pages.material = outlinedMaterial;
 				}
 				else{
@@ -103,9 +108,15 @@ public class Book : MonoBehaviour {
 				Jump();
 			}
 			pages.material = angryMaterial;
+			if(!audioS.isPlaying){
+				audioS.clip = angry;
+				audioS.loop = true;
+				audioS.Play();
+			}
 		}
 		else if (anger <= 0){
 			anger = 0;
+			audioS.loop = false;
 		}
 		if (jumpInterval < jumpTimer){
 			jumpTimer = jumpInterval;
@@ -141,4 +152,8 @@ public class Book : MonoBehaviour {
 		Instantiate(angryText, transform.position, Quaternion.identity);
 	}
 
+	public void PlayDing(){
+		audioS.clip = ding;
+		audioS.Play();
+	}
 }

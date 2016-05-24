@@ -6,8 +6,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 	public CharacterController character;
 	public FirstPersonController fpc;
-	public GameObject winsound;
-	public GameObject losesound;
 
 	GameStats gs;
 	InterfaceManager im;
@@ -15,8 +13,6 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		losesound.SetActive (false);
-		winsound.SetActive (false);
 		gs = GetComponent<GameStats>();
 		im = GetComponent<InterfaceManager>();
 		shelves = FindObjectsOfType<Bookshelf>();
@@ -38,7 +34,7 @@ public class GameManager : MonoBehaviour {
 			Cursor.visible = true;
 			im.fired.text = "YOU'RE FIRED";
 			im.retry.SetActive (true);
-			losesound.SetActive (true);
+
 
 		}
 		else if(gs.sortedBooks == gs.totalBooks){
@@ -48,7 +44,7 @@ public class GameManager : MonoBehaviour {
 			Cursor.visible = true;
 			im.fired.text = "YOU'RE NOT FIRED! (yet)\nTIME REMAINING: " + gs.levelTime.ToString();
 			im.retry.SetActive (true);
-			winsound.SetActive (true);
+
 
 		}
 		else{
