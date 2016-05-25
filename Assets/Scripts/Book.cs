@@ -114,17 +114,9 @@ public class Book : MonoBehaviour {
 				Jump();
 			}
 			pages.material = angryMaterial;
-			if(!audioS.isPlaying){
-				audioS.clip = angry;
-				audioS.loop = true;
-				audioS.volume = 1;
-				audioS.Play();
-			}
 		}
 		else if (anger <= 0){
 			anger = 0;
-			audioS.loop = false;
-			audioS.volume -= Time.deltaTime;
 		}
 		if (jumpInterval < jumpTimer){
 			jumpTimer = jumpInterval;
@@ -164,11 +156,16 @@ public class Book : MonoBehaviour {
 	void Jump(){
 		body.AddForce(new Vector3(Random.Range(-1.0f,1.0f),Random.Range(0.0f,1.0f),Random.Range(-1.0f,1.0f)).normalized * jumpForce,ForceMode.Impulse);
 		Instantiate(explosion, transform.position, transform.rotation);
-		Instantiate(angryText, transform.position, Quaternion.identity);
+		Instantiate(angryText, transform.position + new Vector3(0,0.3f,0), Quaternion.identity);
 	}
 
 	public void PlayDing(){
 		audioS.clip = ding;
+		audioS.Play();
+	}
+
+	public void PlayBoo(){
+		audioS.clip = angry;
 		audioS.Play();
 	}
 

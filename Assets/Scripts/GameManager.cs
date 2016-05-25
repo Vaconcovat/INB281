@@ -8,11 +8,13 @@ public class GameManager : MonoBehaviour {
 	public FirstPersonController fpc;
 	public int totalBooks;
 
+	bool jumping = false;
 	GameStats gs;
 	InterfaceManager im;
 	Bookshelf[] shelves;
 	Bookspawn[] spawners;
 	GolbalSounds gsounds;
+	Rigidbody[] bodies;
 
 	// Use this for initialization
 	void Awake () {
@@ -40,7 +42,11 @@ public class GameManager : MonoBehaviour {
 			spawners[i].Spawn();
 		}
 	}
-	
+
+	void Start(){
+		bodies = FindObjectsOfType<Rigidbody>();
+	}
+
 	// Update is called once per frame
 	void Update () {
 		if (gs.levelTime <= 0){
@@ -79,6 +85,11 @@ public class GameManager : MonoBehaviour {
 			im.fader.enabled = false;
 			im.fader.color = new Color(0,0,0,0);
 		}
+
+		if(gs.levelTime < 20 && !jumping){
+			jumping = true;
+			StartCoroutine("Jump");
+		}
 	}
 
 	public void Exit(){
@@ -88,5 +99,17 @@ public class GameManager : MonoBehaviour {
 
 	public void Retry (){
 		SceneManager.LoadScene ("test");
+	}
+
+	IEnumerator Jump(){
+		while(true){
+			foreach(Rigidbody body in bodies){
+				if(body.GetComponent<Book>() == null && Random.value > 0.5f){
+						body.AddForce(new Vector3(Random.Range(-1.0f,1.0f),Random.Range(0.0f,1.0f),Random.Range(-1.0f,1.0f)).normalized * (10 - (gs.levelTime/2)),ForceMode.Impulse);
+				}
+			}
+			yield return new WaitForSeconds(Random.value/2.0f);
+		}
+
 	}
 }

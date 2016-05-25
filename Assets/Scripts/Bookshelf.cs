@@ -88,31 +88,32 @@ public class Bookshelf : MonoBehaviour {
 					if(book.airDistance > 15){
 						im.DisplayMessage("AMAZING!!! " + book.airDistance.ToString("F1") + "m throw! (+300)", new Color(0,1,0,1));
 						gs.score += 300;
-						im.Score.fontSize += 30;
+						im.Score.fontSize += 60;
 					}
 					else if(book.airDistance > 10){
 						im.DisplayMessage("Unreal! " + book.airDistance.ToString("F1") + "m throw! (+200)", new Color(0,1,0,1));
 						gs.score += 200;
-						im.Score.fontSize += 20;
+						im.Score.fontSize += 50;
 					}
 					else if(book.airDistance > 5){
 						im.DisplayMessage("Cool! " + book.airDistance.ToString("F1") + "m throw! (+150)", new Color(0,1,0,1));
 						gs.score += 150;
-						im.Score.fontSize += 15;
+						im.Score.fontSize += 40;
 					}
 					else if(book.airDistance > 2){
 						im.DisplayMessage("Nice! " + book.airDistance.ToString("F1") + "m throw! (+100)", new Color(0,1,0,1));
 						gs.score += 100;
-						im.Score.fontSize += 10;
+						im.Score.fontSize += 30;
 					}
 					else{
 						im.DisplayMessage("Lame. (+50)", new Color(0,1,0,1));
 						gs.score += 50;
-						im.Score.fontSize += 5;
+						im.Score.fontSize += 20;
 					}
 
 				}
 				else{
+					book.PlayBoo();
 					im.DisplayMessage("WRONG (-20)", new Color(1,0,0,1));
 					gs.score -= 20;
 				}
