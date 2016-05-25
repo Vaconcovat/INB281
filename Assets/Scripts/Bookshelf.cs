@@ -6,10 +6,14 @@ public class Bookshelf : MonoBehaviour {
 	public string categoryName;
 	public string categoryNameScrambled;
 	public bool scrambled;
+	GameStats gs;
+	InterfaceManager im;
 	//public Transform player;
 	//public AudioClip ping;
 	// Use this for initialization
 	void Start () {
+		im = FindObjectOfType<InterfaceManager>();
+		gs = FindObjectOfType<GameStats>();
 		categoryName = category.ToString();
 		if(scrambled){
 			char[] characters = new char[categoryName.Length];
@@ -51,6 +55,26 @@ public class Bookshelf : MonoBehaviour {
 			Book book = col.gameObject.GetComponent<Book>();
 			if(book.state == 3){
 				book.state = 0;
+				if(book.airDistance > 15){
+						im.DisplayMessage("Book fell! (-300)", new Color(0,0,1,1));
+						gs.score -= 300;
+					}
+					else if(book.airDistance > 10){
+						im.DisplayMessage("Book fell! (-200)", new Color(0,0,1,1));
+						gs.score -= 200;
+					}
+					else if(book.airDistance > 5){
+						im.DisplayMessage("Book fell! (-150)", new Color(0,0,1,1));
+						gs.score -= 150;
+					}
+					else if(book.airDistance > 2){
+						im.DisplayMessage("Book fell! (-100)", new Color(0,0,1,1));
+						gs.score -= 100;
+					}
+					else{
+						im.DisplayMessage("Book fell! (-50)", new Color(0,0,1,1));
+						gs.score -= 50;
+					}
 			}
 		}
 	}
@@ -61,6 +85,36 @@ public class Bookshelf : MonoBehaviour {
 			if (book.state == 0){
 				if(book.category == this.category){
 					book.PlayDing();
+					if(book.airDistance > 15){
+						im.DisplayMessage("AMAZING!!! " + book.airDistance.ToString("F1") + "m throw! (+300)", new Color(0,1,0,1));
+						gs.score += 300;
+						im.Score.fontSize += 30;
+					}
+					else if(book.airDistance > 10){
+						im.DisplayMessage("Unreal! " + book.airDistance.ToString("F1") + "m throw! (+200)", new Color(0,1,0,1));
+						gs.score += 200;
+						im.Score.fontSize += 20;
+					}
+					else if(book.airDistance > 5){
+						im.DisplayMessage("Cool! " + book.airDistance.ToString("F1") + "m throw! (+150)", new Color(0,1,0,1));
+						gs.score += 150;
+						im.Score.fontSize += 15;
+					}
+					else if(book.airDistance > 2){
+						im.DisplayMessage("Nice! " + book.airDistance.ToString("F1") + "m throw! (+100)", new Color(0,1,0,1));
+						gs.score += 100;
+						im.Score.fontSize += 10;
+					}
+					else{
+						im.DisplayMessage("Lame. (+50)", new Color(0,1,0,1));
+						gs.score += 50;
+						im.Score.fontSize += 5;
+					}
+
+				}
+				else{
+					im.DisplayMessage("WRONG (-20)", new Color(1,0,0,1));
+					gs.score -= 20;
 				}
 			}
 		}

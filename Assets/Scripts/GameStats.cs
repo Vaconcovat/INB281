@@ -7,7 +7,9 @@ public class GameStats : MonoBehaviour {
 	public bool counting = false;
 	public int totalBooks;
 	public int sortedBooks;
-	public int score;
+	public int score = 0;
+	public int scoreMod;
+	public int scoreDisplay = 900;
 	public int highscore = 0;
 
 	Book[] books;
@@ -15,26 +17,40 @@ public class GameStats : MonoBehaviour {
 	void Start () {
 		books = FindObjectsOfType<Book>();
 		totalBooks = books.Length;
+		StartCoroutine("UpdateScoreDisplay");
+		scoreDisplay = Mathf.CeilToInt(levelTime)*10;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		int i = 0;
-		int s = 0;
 		foreach(Book b in books){
 			if(b.state == 3){
 				i++;
-				s = s + 5;
 			}
 		}
 		sortedBooks = i;
-		score = s;
-		if (score > highscore) {
-			highscore = score;
-		}
+		scoreMod = score + Mathf.CeilToInt(levelTime)*10;
+		Debug.Log(scoreMod);
+		//if (score > highscore) {
+		//	highscore = score;
+		//}
 
 		if(levelTime > 0 && sortedBooks < totalBooks && counting){
 			levelTime -= Time.deltaTime;
 		}
+	}
+
+	IEnumerator UpdateScoreDisplay(){
+		while(true){
+			if(scoreDisplay > scoreMod){
+				scoreDisplay--;
+			}
+			else if(scoreDisplay < scoreMod){
+				scoreDisplay++;
+			}
+			yield return new WaitForSeconds(0.01f);
+		}
+
 	}
 }

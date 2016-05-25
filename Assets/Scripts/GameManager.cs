@@ -47,9 +47,13 @@ public class GameManager : MonoBehaviour {
 			fpc.enabled = false;
 			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
-			im.fired.text = "YOU'RE FIRED";
+			im.fired.color = Color.red;
+			im.fired.text = "YOU'RE FIRED\nYOUR SCORE: " + gs.scoreMod.ToString();
 			im.retry.SetActive (true);
-
+			im.fader.enabled = true;
+			im.fader.color = new Color(im.fader.color.r, im.fader.color.g, im.fader.color.b, Mathf.Min(im.fader.color.a + Time.deltaTime * 0.5f, 1));
+			im.timer.enabled = false;
+			im.counter.enabled = false;
 
 		}
 		else if(gs.sortedBooks == gs.totalBooks){
@@ -57,8 +61,11 @@ public class GameManager : MonoBehaviour {
 			fpc.enabled = false;
 			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
-			im.fired.text = "YOU'RE NOT FIRED! (yet)\nTIME REMAINING: " + gs.levelTime.ToString();
+			im.fired.color = Color.green;
+			im.fired.text = "YOU'RE NOT FIRED! (yet)\nYOUR SCORE: " + gs.scoreMod.ToString();
 			im.retry.SetActive (true);
+			im.fader.enabled = true;
+			im.fader.color = new Color(im.fader.color.r, im.fader.color.g, im.fader.color.b, Mathf.Min(im.fader.color.a + Time.deltaTime * 0.5f, 1));
 
 
 		}
@@ -67,6 +74,8 @@ public class GameManager : MonoBehaviour {
 			fpc.enabled = true;
 			im.fired.text = "";
 			im.retry.SetActive (false);
+			im.fader.enabled = false;
+			im.fader.color = new Color(0,0,0,0);
 		}
 	}
 

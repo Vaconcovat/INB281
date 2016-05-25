@@ -29,6 +29,9 @@ public class Book : MonoBehaviour {
 	AudioSource audioS;
 	TutorialManager tut;
 	public AudioClip angry, ding;
+	public float airDistance;
+	bool inAir;
+	Vector3 startPos;
 
 	public static T[] Randomize<T>(T[] source){
 		List<T> randomized = new List<T>();
@@ -128,6 +131,10 @@ public class Book : MonoBehaviour {
 		else{
 			GetComponent<TrailRenderer>().enabled = false;
 		}
+		if(inAir){
+			airDistance = Vector3.Distance(transform.position, startPos);
+			Debug.DrawLine(transform.position, startPos);
+		}
 
 	}
 
@@ -135,6 +142,7 @@ public class Book : MonoBehaviour {
 		state = 0;
 		player.equipped = null;
 		body.isKinematic = false;
+		startPos = transform.position;
 	}
 
 	public void Throw(float force){
@@ -144,6 +152,8 @@ public class Book : MonoBehaviour {
 		body.AddForce(player.view.forward.normalized * force, ForceMode.Impulse);
 		body.AddTorque(Random.rotation.eulerAngles);
 		thrown = true;
+		inAir = true;
+		startPos = transform.position;
 	}
 
 	void Jump(){
@@ -155,5 +165,9 @@ public class Book : MonoBehaviour {
 	public void PlayDing(){
 		audioS.clip = ding;
 		audioS.Play();
+	}
+
+	void OnCollisionEnter(Collision col){
+		inAir = false;
 	}
 }
