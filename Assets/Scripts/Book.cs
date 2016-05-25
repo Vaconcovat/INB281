@@ -30,6 +30,8 @@ public class Book : MonoBehaviour {
 	TutorialManager tut;
 	public AudioClip angry, ding;
 	public float airDistance;
+	public MeshRenderer coverMesh;
+	public Texture[] covers;
 	bool inAir;
 	Vector3 startPos;
 
@@ -59,6 +61,7 @@ public class Book : MonoBehaviour {
 		GetComponentInChildren<TextMesh>().text = categoryNameScrambled;
 		coll = GetComponent<Collider>();
 		audioS = GetComponent<AudioSource>();
+		coverMesh.material.mainTexture = covers[Random.Range(0, covers.Length)];
 	}
 	
 	// Update is called once per frame
@@ -114,12 +117,14 @@ public class Book : MonoBehaviour {
 			if(!audioS.isPlaying){
 				audioS.clip = angry;
 				audioS.loop = true;
+				audioS.volume = 1;
 				audioS.Play();
 			}
 		}
 		else if (anger <= 0){
 			anger = 0;
 			audioS.loop = false;
+			audioS.volume -= Time.deltaTime;
 		}
 		if (jumpInterval < jumpTimer){
 			jumpTimer = jumpInterval;

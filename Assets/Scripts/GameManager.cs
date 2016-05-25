@@ -12,9 +12,11 @@ public class GameManager : MonoBehaviour {
 	InterfaceManager im;
 	Bookshelf[] shelves;
 	Bookspawn[] spawners;
+	GolbalSounds gsounds;
 
 	// Use this for initialization
 	void Awake () {
+		gsounds = FindObjectOfType<GolbalSounds>();
 		spawners = FindObjectsOfType<Bookspawn>();
 		gs = GetComponent<GameStats>();
 		im = GetComponent<InterfaceManager>();
@@ -66,7 +68,7 @@ public class GameManager : MonoBehaviour {
 			im.retry.SetActive (true);
 			im.fader.enabled = true;
 			im.fader.color = new Color(im.fader.color.r, im.fader.color.g, im.fader.color.b, Mathf.Min(im.fader.color.a + Time.deltaTime * 0.5f, 1));
-
+			gsounds.music.volume -= Time.deltaTime * 0.3f;
 
 		}
 		else{
