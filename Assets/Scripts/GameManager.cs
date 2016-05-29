@@ -62,8 +62,18 @@ public class GameManager : MonoBehaviour {
 			im.fader.color = new Color(im.fader.color.r, im.fader.color.g, im.fader.color.b, Mathf.Min(im.fader.color.a + Time.deltaTime * 0.5f, 1));
 			im.timer.enabled = false;
 			im.counter.enabled = false;
+			if (PlayerPrefs.HasKey ("Highscore")) {
+				if (PlayerPrefs.GetInt ("Highscore") < gs.scoreMod) {
+					PlayerPrefs.SetInt ("Highscore", gs.score);
+				}
+			}
+			else {
+				PlayerPrefs.SetInt ("Highscore", gs.score);
+			}
+			im.Highscore.text = "Highscore : " + gs.Highscore;
 
 		}
+
 		else if(gs.sortedBooks == gs.totalBooks){
 			character.enabled = false;
 			fpc.enabled = false;
@@ -75,7 +85,15 @@ public class GameManager : MonoBehaviour {
 			im.fader.enabled = true;
 			im.fader.color = new Color(im.fader.color.r, im.fader.color.g, im.fader.color.b, Mathf.Min(im.fader.color.a + Time.deltaTime * 0.5f, 1));
 			gsounds.music.volume -= Time.deltaTime * 0.3f;
-
+			if (PlayerPrefs.HasKey ("Highscore")) {
+				if (PlayerPrefs.GetInt ("Highscore") < gs.scoreMod) {
+					PlayerPrefs.SetInt ("Highscore", gs.scoreMod);
+				}
+			}
+			else {
+				PlayerPrefs.SetInt ("Highscore", gs.scoreMod);
+			}
+			im.Highscore.text = "Highscore : " + gs.Highscore;
 		}
 		else{
 			character.enabled = true;
@@ -84,6 +102,7 @@ public class GameManager : MonoBehaviour {
 			im.retry.SetActive (false);
 			im.fader.enabled = false;
 			im.fader.color = new Color(0,0,0,0);
+			im.Highscore.text = "";
 		}
 
 		if(gs.levelTime < 20 && !jumping){

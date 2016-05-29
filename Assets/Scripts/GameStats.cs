@@ -10,7 +10,7 @@ public class GameStats : MonoBehaviour {
 	public int score = 0;
 	public int scoreMod;
 	public int scoreDisplay = 900;
-	//public int Highscore;
+	public int Highscore = 0;
 
 	Book[] books;
 	// Use this for initialization
@@ -19,8 +19,9 @@ public class GameStats : MonoBehaviour {
 		totalBooks = books.Length;
 		StartCoroutine("UpdateScoreDisplay");
 		scoreDisplay = Mathf.CeilToInt(levelTime)*10;
-		//PlayerPrefs.SetInt ("Highscore", Highscore);
-		//Highscore = PlayerPrefs.GetInt ("Highscore");
+		if (PlayerPrefs.HasKey ("Highscore")) {
+			Highscore = PlayerPrefs.GetInt ("Highscore");
+		}
 	}
 	
 	// Update is called once per frame

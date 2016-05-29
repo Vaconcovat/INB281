@@ -7,7 +7,7 @@ public class InterfaceManager : MonoBehaviour {
 	public Text timer;
 	public Text fired;
 	public Text Score;
-	public Text highscore;
+	public Text Highscore;
 	public GameObject retry;
 	public Image throwBar;
 	public Image fader;
@@ -43,7 +43,6 @@ public class InterfaceManager : MonoBehaviour {
 		counter.text = "Books sorted : " + gs.sortedBooks + " / " + gs.totalBooks;
 		timer.text = "TIME REMAINING : " + Mathf.Floor((gs.levelTime/60)).ToString("00") + ":" + (gs.levelTime % 60).ToString("00"); 
 		Score.text = "Score : " + gs.scoreDisplay;
-		//highscore.text = "HighScore : " + gs.Highscore;
 		throwBar.fillAmount = (player.throwStrength / player.maxThrow);
 		throwBar.color = new Color(1, 1-(player.throwStrength / player.maxThrow), 1-(player.throwStrength / player.maxThrow), 1.0f);
 
