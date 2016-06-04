@@ -26,7 +26,7 @@ public class TutorialManager : MonoBehaviour {
 			pickedUp = true;
 		}
 		if(pickedUp && !dropped){
-			GetComponent<TextMesh>().text = "Book categories \nare scrambled.\n\nWASD to move.\nHold LMB to thow.\nPress RMB to drop.";
+			GetComponent<TextMesh>().text = "Book categories \nare scrambled.\n\nWASD to move.\nHold LMB to thow.\nPress E again to drop.";
 			controller.m_WalkSpeed = 5;
 			controller.m_RunSpeed = 10;
 		}

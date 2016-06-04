@@ -12,6 +12,7 @@ public class InterfaceManager : MonoBehaviour {
 	public Image throwBar;
 	public Image fader;
 	public Text MessageText;
+	public Text hintText;
 
 	TutorialManager tm;
 

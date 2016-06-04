@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour {
 		for (int i = 0; i < totalBooks - 1; i++){
 			spawners[i].Spawn();
 		}
+		Debug.Log("Highscore: " + PlayerPrefs.GetInt("Highscore"));
 	}
 
 	void Start(){
@@ -62,16 +63,7 @@ public class GameManager : MonoBehaviour {
 			im.fader.color = new Color(im.fader.color.r, im.fader.color.g, im.fader.color.b, Mathf.Min(im.fader.color.a + Time.deltaTime * 0.5f, 1));
 			im.timer.enabled = false;
 			im.counter.enabled = false;
-			if (PlayerPrefs.HasKey ("Highscore")) {
-				if (PlayerPrefs.GetInt ("Highscore") < gs.scoreMod) {
-					PlayerPrefs.SetInt ("Highscore", gs.score);
-				}
-			}
-			else {
-				PlayerPrefs.SetInt ("Highscore", gs.score);
-			}
-			im.Highscore.text = "Highscore : " + gs.Highscore;
-
+			SetHighscore();
 		}
 
 		else if(gs.sortedBooks == gs.totalBooks){
@@ -85,15 +77,7 @@ public class GameManager : MonoBehaviour {
 			im.fader.enabled = true;
 			im.fader.color = new Color(im.fader.color.r, im.fader.color.g, im.fader.color.b, Mathf.Min(im.fader.color.a + Time.deltaTime * 0.5f, 1));
 			gsounds.music.volume -= Time.deltaTime * 0.3f;
-			if (PlayerPrefs.HasKey ("Highscore")) {
-				if (PlayerPrefs.GetInt ("Highscore") < gs.scoreMod) {
-					PlayerPrefs.SetInt ("Highscore", gs.scoreMod);
-				}
-			}
-			else {
-				PlayerPrefs.SetInt ("Highscore", gs.scoreMod);
-			}
-			im.Highscore.text = "Highscore : " + gs.Highscore;
+			SetHighscore();
 		}
 		else{
 			character.enabled = true;
@@ -118,6 +102,13 @@ public class GameManager : MonoBehaviour {
 
 	public void Retry (){
 		SceneManager.LoadScene ("test");
+	}
+
+	void SetHighscore(){
+		if (PlayerPrefs.GetInt ("Highscore") < gs.scoreMod) {
+			PlayerPrefs.SetInt ("Highscore", gs.scoreMod);
+		}
+		im.Highscore.text = "Highscore : " + PlayerPrefs.GetInt ("Highscore");
 	}
 
 	IEnumerator Jump(){
