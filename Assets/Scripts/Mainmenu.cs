@@ -19,7 +19,7 @@ public class Mainmenu : MonoBehaviour {
 	}
 	void OnMouseUp(){
 		if (start) {
-			SceneManager.LoadScene ("test");
+			SceneManager.LoadScene ("Difficulty");
 		}
 		if (quit) {
 			Application.Quit ();
