@@ -13,6 +13,6 @@ public class LightDimmer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		l.intensity = Mathf.Lerp(0.5f,0,(1-(gs.levelTime/90.0f)));
+		l.intensity = Mathf.Lerp(0.65f,0.10f,(1-(gs.levelTime/90.0f)));
 	}
 }
