@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour {
 			spawners[randomSpawn] = tempSpawn;
 		}
 
-		ds.Difficulty = totalBooks;
+		//ds.Difficulty = totalBooks;
 		for (int i = 0; i < totalBooks - 1; i++){
 			spawners[i].Spawn();
 		}
