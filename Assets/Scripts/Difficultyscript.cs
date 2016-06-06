@@ -7,7 +7,8 @@ public class Difficultyscript : MonoBehaviour {
 	public bool easy;
 	public bool normal;
 	public bool hard;
-	public int Difficulty = 6;
+
+
 	GameManager gm;
 	// Use this for initialization
 	void Start () {
@@ -18,21 +19,18 @@ public class Difficultyscript : MonoBehaviour {
 	void Update () {
 	
 	}
-	void OnMouseUp(){
-		if (easy == true) {
-			//Difficulty = 4;
-
-			SceneManager.LoadScene ("test");
-		} 
+	void OnMouseDown(){
+		if (easy == true){
+		PlayerPrefs.SetInt ("Difficulty", 4);
+		}
 		if (normal == true) {
-
-			//Difficulty = 6;
-			SceneManager.LoadScene ("test");
+			PlayerPrefs.SetInt ("Difficulty", 6);
 		}
 		if (hard == true) {
-
-			//Difficulty = 8;
-			SceneManager.LoadScene ("test");
+			PlayerPrefs.SetInt ("Difficulty", 8);
 		}
+	}
+	void OnMouseUp(){
+		SceneManager.LoadScene ("test");
 	}
 }

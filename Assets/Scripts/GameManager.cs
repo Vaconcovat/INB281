@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour {
 	bool jumping = false;
 	GameStats gs;
 	InterfaceManager im;
-	Difficultyscript ds;
 	Bookshelf[] shelves;
 	Bookspawn[] spawners;
 	GolbalSounds gsounds;
@@ -23,7 +22,6 @@ public class GameManager : MonoBehaviour {
 		spawners = FindObjectsOfType<Bookspawn>();
 		gs = GetComponent<GameStats>();
 		im = GetComponent<InterfaceManager>();
-		ds = GetComponent<Difficultyscript> ();
 		shelves = FindObjectsOfType<Bookshelf>();
 		for (int i = 0; i < shelves.Length; i++){
 			Book.BookCategory tempCategory = shelves[i].category;
@@ -41,7 +39,8 @@ public class GameManager : MonoBehaviour {
 			spawners[randomSpawn] = tempSpawn;
 		}
 
-		//ds.Difficulty = totalBooks;
+		totalBooks = PlayerPrefs.GetInt ("Difficulty");
+
 		for (int i = 0; i < totalBooks - 1; i++){
 			spawners[i].Spawn();
 		}
