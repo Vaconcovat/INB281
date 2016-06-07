@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour {
 	Bookspawn[] spawners;
 	GolbalSounds gsounds;
 	Rigidbody[] bodies;
+	bool failed = false;
 
 	// Use this for initialization
 	void Awake () {
@@ -54,19 +55,24 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (gs.levelTime <= 0){
+			if(!failed){
+				failed = true;
+				Debug.Log("Subtracting: " + Mathf.FloorToInt(gs.score * 0.3f));
+				gs.score -= Mathf.FloorToInt(gs.score * 0.3f);
+			}
 			character.enabled = false;
 			character.GetComponent<Player>().enabled = false;
 			fpc.enabled = false;
 			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
 			im.fired.color = Color.red;
-			im.fired.text = "YOU'RE FIRED\nYOUR SCORE: " + gs.scoreMod.ToString();
+			im.fired.text = "YOU'RE FIRED\nYOUR SCORE (-30%): " + gs.scoreMod.ToString();
 			im.retry.SetActive (true);
 			im.fader.enabled = true;
 			im.fader.color = new Color(im.fader.color.r, im.fader.color.g, im.fader.color.b, Mathf.Min(im.fader.color.a + Time.deltaTime * 0.5f, 1));
 			im.timer.enabled = false;
 			im.counter.enabled = false;
-			SetHighscore();
+			SetHighscore(gs.scoreMod);
 		}
 
 		else if(gs.sortedBooks == gs.totalBooks){
@@ -80,7 +86,7 @@ public class GameManager : MonoBehaviour {
 			im.fader.enabled = true;
 			im.fader.color = new Color(im.fader.color.r, im.fader.color.g, im.fader.color.b, Mathf.Min(im.fader.color.a + Time.deltaTime * 0.5f, 1));
 			gsounds.music.volume -= Time.deltaTime * 0.3f;
-			SetHighscore();
+			SetHighscore(gs.scoreMod);
 		}
 		else{
 			character.enabled = true;
@@ -107,9 +113,9 @@ public class GameManager : MonoBehaviour {
 		SceneManager.LoadScene ("test");
 	}
 
-	void SetHighscore(){
-		if (PlayerPrefs.GetInt ("Highscore") < gs.scoreMod) {
-			PlayerPrefs.SetInt ("Highscore", gs.scoreMod);
+	void SetHighscore(int score){
+		if (PlayerPrefs.GetInt ("Highscore") < score) {
+			PlayerPrefs.SetInt ("Highscore", score);
 		}
 		im.Highscore.text = "Highscore : " + PlayerPrefs.GetInt ("Highscore");
 	}

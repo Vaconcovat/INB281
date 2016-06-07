@@ -25,7 +25,7 @@ public class Book : MonoBehaviour {
 	public Material angryMaterial;
 	public Material defaultMaterial;
 	public MeshRenderer pages;
-	public GameObject explosion;
+	public GameObject explosion, greenExplosion;
 	AudioSource audioS;
 	TutorialManager tut;
 	public AudioClip angry, ding;
@@ -161,6 +161,7 @@ public class Book : MonoBehaviour {
 
 	public void PlayDing(){
 		audioS.clip = ding;
+		Instantiate(greenExplosion, transform.position, transform.rotation);
 		audioS.Play();
 	}
 
