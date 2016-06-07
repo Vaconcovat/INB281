@@ -15,6 +15,8 @@ public class Mainmenu : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		Cursor.visible = true;
+		Screen.lockCursor = false;
 	
 	}
 	void OnMouseUp(){
