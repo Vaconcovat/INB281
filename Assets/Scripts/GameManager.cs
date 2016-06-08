@@ -59,20 +59,21 @@ public class GameManager : MonoBehaviour {
 				failed = true;
 				Debug.Log("Subtracting: " + Mathf.FloorToInt(gs.score * 0.3f));
 				gs.score -= Mathf.FloorToInt(gs.score * 0.3f);
+				character.enabled = false;
+				character.GetComponent<Player>().enabled = false;
+				fpc.enabled = false;
+				Cursor.lockState = CursorLockMode.None;
+				Cursor.visible = true;
+				im.fired.color = Color.red;
+				im.fired.text = "YOU'RE FIRED\nYOUR SCORE (-30%): " + gs.score.ToString();
+				im.retry.SetActive (true);
+				im.fader.enabled = true;
+				im.timer.enabled = false;
+				im.counter.enabled = false;
+				SetHighscore(gs.score);
 			}
-			character.enabled = false;
-			character.GetComponent<Player>().enabled = false;
-			fpc.enabled = false;
-			Cursor.lockState = CursorLockMode.None;
-			Cursor.visible = true;
-			im.fired.color = Color.red;
-			im.fired.text = "YOU'RE FIRED\nYOUR SCORE (-30%): " + gs.scoreMod.ToString();
-			im.retry.SetActive (true);
-			im.fader.enabled = true;
 			im.fader.color = new Color(im.fader.color.r, im.fader.color.g, im.fader.color.b, Mathf.Min(im.fader.color.a + Time.deltaTime * 0.5f, 1));
-			im.timer.enabled = false;
-			im.counter.enabled = false;
-			SetHighscore(gs.scoreMod);
+
 		}
 
 		else if(gs.sortedBooks == gs.totalBooks){
